@@ -51,6 +51,39 @@ def pathTo(search, v):
     stk.push(path,search['s'])
     return path
 
+def componentes_conectados(grafo):
+    counter = 0
+    vertices = g.vertices(grafo)
+    graph_iter = it.newIterator (vertices)
+    m = map.newMap(capacity= 10,maptype='CHAINING',comparefunction=grafo['comparefunction'])
+    while (it.hasNext (graph_iter)):
+        n = it.next (graph_iter)
+        visited_w = map.get(m, n)
+        if visited_w == None :
+            newDFS_2(grafo,n,m)
+            counter += 1
+    return counter
+
+
+
+
+def newDFS_2(grafo, source,revisados):
+    """
+    Crea una busqueda DFS para un grafo y un vertice origen
+    """
+    map.put(revisados,source,{'marked':True})
+    dfs_2(grafo, source,revisados)
+    
+
+def dfs_2 (grafo, v, revisados) :
+    adjs = g.adjacents(grafo,v)
+    adjs_iter = it.newIterator (adjs)
+    while (it.hasNext(adjs_iter)):
+        w = it.next (adjs_iter)
+        visited_w = map.contains(revisados, w)
+        if visited_w == False :
+            map.put(revisados, w, {'marked':True})
+            dfs_2(grafo, w,revisados)
 
 
 # Function to return the smallest  
@@ -128,9 +161,12 @@ if __name__ ==  "__main__" :
     g.addEdge (graph, 'Cucuta','Bucaramanga', 1 )
 
     search = newDFS(graph,'Bogota')
+    cc = componentes_conectados(graph)
 
 
     print ('A Cali', hasPathTo(search, 'Cali'))
     print ('A Cucuta', hasPathTo(search,'Cucuta'))
     pathManizales= pathTo(search,'Manizales')
     print('DSF::roadToManizales',pathManizales)
+    print(str(cc))
+    

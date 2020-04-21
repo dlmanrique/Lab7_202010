@@ -97,7 +97,7 @@ def countNodesEdges(catalog):
 
 def countConnectedComponents(catalog):
     t1_start = process_time() #tiempo inicial
-    ccs = model.countConnectedComponents(catalog) 
+    ccs = model.componentes_conectados(catalog) 
     t1_stop = process_time() #tiempo final
     print("Tiempo de ejecución de conteo de componentes conectados:",t1_stop-t1_start," segundos")
     return ccs

@@ -21,6 +21,7 @@
 
 
 import config as cf
+import math
 from ADT import list as lt
 from ADT import graph as g
 from ADT import map as map
@@ -40,7 +41,7 @@ def newCatalog():
     """
     Inicializa el catálogo y retorna el catalogo inicializado.
     """
-    rgraph = g.newGraph(111353,compareByKey)#El numero esta mal
+    rgraph = g.newGraph(111353,compareByKey)
     catalog = {'reviewGraph':rgraph}    
     return catalog
 
@@ -70,14 +71,40 @@ def countNodesEdges (catalog):
 
     return nodes,edges
 
-def countConnectedComponents (catalog):
+def componentes_conectados(catalog):
+    counter = 0
+    grafo = catalog['reviewGraph']
+    vertices = g.vertices(grafo)
+    graph_iter = it.newIterator (vertices)
+    m = map.newMap(capacity= 55681,maptype='CHAINING',comparefunction=grafo['comparefunction']) # Se asume que hay 111353 nodos y asi se pone la capacidad de la tabla.
+    while (it.hasNext (graph_iter)):
+        n = it.next (graph_iter)
+        visited_w = map.get(m, n)
+        if visited_w == None :
+            newDFS_2(grafo,n,m)
+            counter += 1
+    return counter
+
+
+# Funciones recicladas
+
+def newDFS_2(grafo, source,revisados):
     """
-    Retorna la cantidad de componentes conectados del grafo de revisiones
+    Crea una busqueda DFS para un grafo y un vertice origen
     """
-    pass
+    map.put(revisados,source,{'marked':True})
+    dfs_2(grafo, source,revisados)
+    
 
-
-
+def dfs_2 (grafo, v, revisados) :
+    adjs = g.adjacents(grafo,v)
+    adjs_iter = it.newIterator (adjs)
+    while (it.hasNext(adjs_iter)):
+        w = it.next (adjs_iter)
+        visited_w = map.contains(revisados, w)
+        if visited_w == False :
+            map.put(revisados, w, {'marked':True})
+            dfs_2(grafo, w,revisados)
 
 # Funciones de comparacion
 
