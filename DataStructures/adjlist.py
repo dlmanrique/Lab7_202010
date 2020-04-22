@@ -57,7 +57,9 @@ def removeVertex ( graph, vertex):
     Remueve el vertice vertex del grafo graph
     """ 
     # TODO
-    pass
+    map.remove(graph['vertices'], vertex)
+    
+    return graph
 
 
 def numVertex (graph):

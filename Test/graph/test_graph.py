@@ -48,6 +48,55 @@ class GraphTest (unittest.TestCase):
         g.insertVertex (graph, 'Barranquilla')
         g.insertVertex (graph, 'Manizales')
 
+        self.assertEqual (g.numVertex(graph), 7)
+        lst = g.vertices (graph)
+        self.assertEqual (lt.size (lst), 7)
+
+    def test_removeVertex(self):
+        graph = g.newGraph(7,self.comparenames)
+        
+        g.insertVertex (graph, 'Bogota')
+        g.insertVertex (graph, 'Yopal')
+        g.insertVertex (graph, 'Cali')
+        g.insertVertex (graph, 'Medellin')
+        g.insertVertex (graph, 'Pasto')
+        g.insertVertex (graph, 'Barranquilla')
+        g.insertVertex (graph, 'Manizales')
+
+        
+
+        g.removeVertex(graph,'Bogota')
+        g.removeVertex(graph,'Cali')
+
+        n=g.containsVertex(graph, 'Bogota')
+        o=g.containsVertex(graph, 'Cali')
+
+        self.assertEqual(False,n)
+        self.assertEqual(False,o)
+
+    def test_numVertex(self):
+        graph = g.newGraph(7,self.comparenames)
+
+        g.insertVertex (graph, 'Bogota')
+        g.insertVertex (graph, 'Yopal')
+        g.insertVertex (graph, 'Cali')
+        n=g.numVertex(graph)
+        lst = g.vertices (graph)
+        self.assertEqual (lt.size (lst), n)
+        
+    def test_numEdges(self):
+        graph = g.newGraph(7,self.comparenames)
+
+        g.insertVertex (graph, 'Bogota')
+        g.insertVertex (graph, 'Yopal')
+        g.insertVertex (graph, 'Cali')
+
+        g.addEdge (graph, 'Bogota', 'Yopal')
+        g.addEdge (graph, 'Bogota', 'Cali')
+
+        n=g.numEdges(graph)
+        lst = g.edges (graph)
+        self.assertEqual (lt.size (lst), n)
 
     def test_addEdges (self):
         graph = g.newGraph(7,self.comparenames)
@@ -88,6 +137,41 @@ class GraphTest (unittest.TestCase):
         lst = g.adjacents (graph, 'Bogota')
         self.assertEqual (lt.size (lst), 4)
     
+    def test_adjacents(self):
+        graph = g.newGraph(7,self.comparenames)
+
+        g.insertVertex (graph, 'Bogota')
+        g.insertVertex (graph, 'Yopal')
+        g.insertVertex (graph, 'Cali')
+        g.insertVertex (graph, 'Medellin')
+        g.insertVertex (graph, 'Pasto')
+        g.insertVertex (graph, 'Barranquilla')
+        g.insertVertex (graph, 'Manizales')
+
+        g.addEdge (graph, 'Bogota', 'Yopal')
+        g.addEdge (graph, 'Bogota', 'Medellin')
+        g.addEdge (graph, 'Bogota', 'Pasto')
+        g.addEdge (graph, 'Bogota', 'Cali')
+        g.addEdge (graph, 'Yopal', 'Medellin')
+        g.addEdge (graph, 'Medellin', 'Pasto')
+        g.addEdge (graph, 'Cali', 'Pasto')
+        g.addEdge (graph, 'Cali', 'Barranquilla')
+        g.addEdge (graph, 'Barranquilla','Manizales')
+        g.addEdge (graph, 'Pasto','Manizales')
+
+        lst=g.adjacents(graph,'Bogota')
+        self.assertEqual(lt.size(lst),4)
+    
+    def test_containsVertex(self):
+        graph = g.newGraph(7,self.comparenames)
+
+        g.insertVertex (graph, 'Bogota')
+        g.insertVertex (graph, 'Yopal')
+        g.insertVertex (graph, 'Cali')
+        v1 = g.containsVertex(graph,'Cali')
+        self.assertEqual (True, v1)
+        v2=g.containsVertex(graph,'Tunja')
+        self.assertEqual(False,v2)
 
 
 if __name__ == "__main__":
